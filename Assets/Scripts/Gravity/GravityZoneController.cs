@@ -53,8 +53,6 @@ namespace Gravity
                     rb.velocity = new Vector3(0f, 0f, 0f);
                     rb.useGravity = true;
                     
-                    print("REMOVED !");
-                    
                     if (_boxList != null && _boxList.Contains(box))
                     {
                         _boxList.Remove(box);
@@ -72,7 +70,7 @@ namespace Gravity
                     if (box != null)
                     {
                         Rigidbody rb = box.GetComponent<Rigidbody>();
-
+                        
                         if (rb != null)
                         {
                             Vector3 gravity;
@@ -88,14 +86,12 @@ namespace Gravity
                                 print($"Gravity: {gravity.y}");
                                 */
                             }
-                            else
+                            else if(_IsGravity == false && rb.useGravity == true)
                             {
                                 rb.useGravity = false;
                                 gravity = new Vector3(0, (_gravityScale - 0.5f), 0);
                                 
-                                rb.AddForce(gravity, ForceMode.Impulse);
-                                
-                                print($"Gravity: {gravity.y}");
+                                rb.AddForce(gravity, ForceMode.VelocityChange);
                             }
                         }
                     }

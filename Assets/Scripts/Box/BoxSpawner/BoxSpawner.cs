@@ -1,20 +1,31 @@
-using System;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 
-namespace BoxSpawner
+namespace Box
 {
     public class BoxSpawner : MonoBehaviour
     {
+        [Header("Prefab")]
         [SerializeField] private GameObject _boxPrefab;
+        
+        [Header("Spawn Point / Parent")]
         [SerializeField] private Transform _spawnPoint;
+
+        [Header("Boxes SO List")] 
+        [SerializeField] private List<BoxSO> _boxesScriptableObjectsList;
 
         [Range(1, 30)] [SerializeField] private float _spawnTime;
         [Range(1, 5)] [SerializeField] private int _spawnAmount;
 
-        [SerializeField] private bool _ToSpawn;
+        [SerializeField] private bool _toSpawn;
 
+        public bool ToSpawn
+        {
+            get => _toSpawn;
+            set => _toSpawn = value;
+        }
+        
         private float _timer;
         private int _randomSpawnAmount;
         
@@ -26,7 +37,7 @@ namespace BoxSpawner
 
             if (_timer >= _spawnTime)
             {
-                if (_ToSpawn)
+                if (_toSpawn)
                 {
                     if (_spawnAmount > 1)
                     {
@@ -53,15 +64,14 @@ namespace BoxSpawner
         private void SpawnBox()
         {
             GameObject instance = Instantiate(_boxPrefab, _spawnPoint, false);
-        }
 
-        private void MoveBox(GameObject box)
-        {
-            Rigidbody rb = box.GetComponent<Rigidbody>();
+            Box box = instance.GetComponent<Box>();
 
-            Vector3 vector = new Vector3(0f, 10f, 0f);
+            BoxSO randomBoxSO = _boxesScriptableObjectsList[random.Next(0, _boxesScriptableObjectsList.Count)];
             
-            rb.AddForce(vector, ForceMode.Impulse);
+            int randomMass = random.Next(1, 4);
+            
+            box.Initialisation(randomBoxSO.id, randomMass, randomBoxSO.material);
         }
     }
 }
