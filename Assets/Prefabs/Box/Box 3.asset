@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Box 3
   m_EditorClassIdentifier: 
   id: 3
+  companyName: Name 3
   material: {fileID: 2100000, guid: 41cfa1967d92725468dd830944134257, type: 2}

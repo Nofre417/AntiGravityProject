@@ -17,7 +17,17 @@ namespace Receiver
                 _boxSo = value;
                 _receiverInterface.CompanyName = _boxSo.companyName;
                 _receiverInterface.BoxesAmount = $"{_receivedBoxesAmount}/{_avaliableBoxesAmount}";
+                _receiverInterface.Color = _boxSo.material.color;
             }
+        }
+
+        public int BoxesAmount
+        {
+            set
+            {
+                _avaliableBoxesAmount = value;
+                UpdateInterface();
+            } 
         }
         
         private BoxSO _boxSo;

@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Box;
 using UnityEngine;
@@ -22,19 +20,10 @@ namespace LevelControllers
         
         public void SetReceiversTargets()
         {
-            List<BoxSO> shaffledList = ShaffleList(_boxesSOList);
-            int index = 0;
-
-            if (shaffledList != null && shaffledList.Count >= 1)
+            for (int i = 0; i < _receiversList.Count; i++)
             {
-                
-                foreach (var receiver in _receiversList)
-                {
-                    receiver.BoxSO = shaffledList[index];
-                    index += 1;
-                }
+                _receiversList[i].BoxSO = _boxesSOList[i];
             }
-
         }
 
         private List<BoxSO> ShaffleList(List<BoxSO> boxesList)
