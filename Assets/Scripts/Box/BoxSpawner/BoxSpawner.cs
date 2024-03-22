@@ -59,7 +59,6 @@ namespace Box
                     }
 
                     _spawnTime -= _spawnTime / 1000f;
-                    print(_spawnTime);
                 }
 
                 _timer -= _spawnTime;
