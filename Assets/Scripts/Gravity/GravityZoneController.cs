@@ -1,13 +1,26 @@
 using System;
 using System.Collections.Generic;
+using Border;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gravity
 {
     public class GravityZoneController : MonoBehaviour
     {
-        [Range(0, 25)] [SerializeField] private float _gravityScale;
+        [SerializeField] private float _gravityScale;
         [SerializeField] private bool _IsGravity = true;
+        [SerializeField] private GateController gateController;
+
+        public bool IsGravity
+        {
+            get => _IsGravity;
+            set
+            {
+                _IsGravity = value;
+                MoveBox();
+            }
+        }
 
         private List<GameObject> _boxList;
 
@@ -15,11 +28,22 @@ namespace Gravity
         {
             _boxList = new();
         }
+        
 
         public void SetGravity()
         {
-            if (_IsGravity == true) _IsGravity = false;
-            else _IsGravity = true;
+            if (_IsGravity)
+            {
+                if (!gateController.IsOpen)
+                {
+                    _IsGravity = false;
+                    gateController.IsOpen = true;
+                }
+            }
+            else
+            {
+                _IsGravity = true;
+            }
             
             MoveBox();
         }
@@ -32,7 +56,7 @@ namespace Gravity
 
                 Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
 
-                if (rb != null)
+                if (rb != null && !_IsGravity)
                 {
                     rb.useGravity = false;
                     MoveBox();
@@ -60,7 +84,7 @@ namespace Gravity
                 }
             }
         }
-
+        
         private void MoveBox()
         {
             if (_boxList != null && _boxList.Count >= 1)
@@ -78,20 +102,13 @@ namespace Gravity
                             if (_IsGravity)
                             {
                                 rb.useGravity = true;
-                                /*
-                                gravity = new Vector3(0, ((_gravityScale - 0.5f) * -1f) * 8 , 0);
-
-                                rb.AddForce(gravity, ForceMode.Acceleration);
-
-                                print($"Gravity: {gravity.y}");
-                                */
                             }
-                            else if(_IsGravity == false && rb.useGravity == true)
+                            else if(_IsGravity == false && rb.useGravity)
                             {
                                 rb.useGravity = false;
                                 gravity = new Vector3(0, (_gravityScale - 0.5f), 0);
                                 
-                                rb.AddForce(gravity, ForceMode.VelocityChange);
+                                rb.AddForce(gravity, ForceMode.Acceleration);
                             }
                         }
                     }

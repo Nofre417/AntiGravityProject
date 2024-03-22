@@ -8,6 +8,7 @@ namespace Receiver
     {
         [SerializeField] private ReceiversController _receiversController;
         [SerializeField] private ReceiverInterface _receiverInterface;
+        [SerializeField] private int _scorePerBox = 10;
 
         public BoxSO BoxSO
         {
@@ -15,8 +16,7 @@ namespace Receiver
             set
             {
                 _boxSo = value;
-                _receiverInterface.CompanyName = _boxSo.companyName;
-                _receiverInterface.BoxesAmount = $"{_receivedBoxesAmount}/{_avaliableBoxesAmount}";
+                _receiverInterface.BoxesAmount = $"{_receivedBoxesAmount}";
                 _receiverInterface.Color = _boxSo.material.color;
             }
         }
@@ -25,7 +25,7 @@ namespace Receiver
         {
             set
             {
-                _avaliableBoxesAmount = value;
+                _receivedBoxesAmount = value;
                 UpdateInterface();
             } 
         }
@@ -33,7 +33,6 @@ namespace Receiver
         private BoxSO _boxSo;
 
         private int _receivedBoxesAmount = 0;
-        private int _avaliableBoxesAmount = 0;
 
         public void CompareEnteredBox(Box.Box box)
         {
@@ -41,7 +40,7 @@ namespace Receiver
             {
                 _receivedBoxesAmount++;
                 
-                _receiversController.IncrementScore(10);
+                _receiversController.IncrementScore(_scorePerBox);
                 _receiversController.IncrementBoxesAmount(1);
                 
                 UpdateInterface();
@@ -50,7 +49,7 @@ namespace Receiver
 
         private void UpdateInterface()
         {
-            _receiverInterface.BoxesAmount = $"{_avaliableBoxesAmount}/{_receivedBoxesAmount}";
+            _receiverInterface.BoxesAmount = $"{_receivedBoxesAmount}";
         }
     }
 }

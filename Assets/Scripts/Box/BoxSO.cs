@@ -6,7 +6,6 @@ namespace Box
     public class BoxSO : ScriptableObject
     {
         public int id;
-        public string companyName;
         public Material material;
     }
 }

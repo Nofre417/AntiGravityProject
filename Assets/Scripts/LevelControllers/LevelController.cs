@@ -1,6 +1,7 @@
-using System;
 using LevelControllers.View;
+using MainMenu;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace LevelControllers
 {
@@ -8,6 +9,8 @@ namespace LevelControllers
     {
         [SerializeField] private ReceiversController _receiversController;
         [SerializeField] private LevelStatsView _levelStatsView;
+        
+        
         public int Score
         {
             get => _score;
@@ -15,6 +18,8 @@ namespace LevelControllers
             {
                 _score = value;
                 _levelStatsView.Score = $"Score: {_score}";
+
+                BestScoreDataController.SetMaxScore(_score);
             }
             
         }
@@ -25,6 +30,8 @@ namespace LevelControllers
             {
                 _boxAmount = value;
                 _levelStatsView.BoxesAmount = $"Box: {_boxAmount}";
+
+                BestScoreDataController.SetMaxBoxes(_boxAmount);
             }
         }
         
@@ -34,6 +41,13 @@ namespace LevelControllers
         private void Start()
         {
             SetReceivers();
+            
+            BestScoreDataController.ResetValues();
+        }
+
+        private void Update()
+        {
+            
         }
 
         private void SetReceivers()
@@ -42,6 +56,16 @@ namespace LevelControllers
             {
                 _receiversController.SetReceiversTargets();
             }
+        }
+
+        public void LevelRestart()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        public void LevelExit()
+        {
+            SceneManager.LoadScene("MainMenuScene");
         }
     }
 }

@@ -20,43 +20,34 @@ namespace LevelControllers
         
         public void SetReceiversTargets()
         {
-            for (int i = 0; i < _receiversList.Count; i++)
+            int count = 0;
+
+            List<BoxSO> shuffledList = ShuffleList(_boxesSOList);
+            
+
+            foreach (var box in shuffledList)
             {
-                _receiversList[i].BoxSO = _boxesSOList[i];
+                _receiversList[count].BoxSO = box;
+                _receiversList[count + 1].BoxSO = box;
+                count += 2;
             }
         }
 
-        private List<BoxSO> ShaffleList(List<BoxSO> boxesList)
+        private List<BoxSO> ShuffleList(List<BoxSO> listToShuffle)
         {
-            List<BoxSO> result = new();
-            
-            _random = new();
-            int length = boxesList.Count - 1;
-            bool flag = true;
+            List<BoxSO> result = listToShuffle;
 
-            if (length > 1)
+            for (int i = 0; i < listToShuffle.Count; i++)
             {
-                do
-                {
-                    int randomValue = GetRandomValue();
+                _random = new();
+                int j = _random.Next(i, listToShuffle.Count);
 
-                    if (!result.Contains(boxesList[randomValue]))
-                    {
-                        result.Add(boxesList[randomValue]);
-                    }
-                    
-                } while (result.Count < boxesList.Count);
+                (listToShuffle[i], listToShuffle[j]) = (listToShuffle[j], listToShuffle[i]);
             }
 
-            int GetRandomValue()
-            {
-                return _random.Next(0, length);
-            }
-
-            print(result.Count);
             return result;
         }
-        
+
         public void IncrementScore(int score) => _levelController.Score += score;
         public void IncrementBoxesAmount(int boxes) => _levelController.BoxAmount += boxes;
     }

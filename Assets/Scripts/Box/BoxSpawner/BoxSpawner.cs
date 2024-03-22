@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
@@ -29,7 +30,8 @@ namespace Box
         private float _timer;
         private int _randomSpawnAmount;
         
-        Random random = new();
+        Random _random = new();
+        
 
         private void Update()
         {
@@ -41,7 +43,7 @@ namespace Box
                 {
                     if (_spawnAmount > 1)
                     {
-                        _randomSpawnAmount = random.Next(1, _spawnAmount);
+                        _randomSpawnAmount = _random.Next(1, _spawnAmount);
                     }
                     
                     if (_randomSpawnAmount > 1)
@@ -55,6 +57,9 @@ namespace Box
                     {
                         SpawnBox();
                     }
+
+                    _spawnTime -= _spawnTime / 1000f;
+                    print(_spawnTime);
                 }
 
                 _timer -= _spawnTime;
@@ -67,11 +72,9 @@ namespace Box
 
             Box box = instance.GetComponent<Box>();
 
-            BoxSO randomBoxSO = _boxesScriptableObjectsList[random.Next(0, _boxesScriptableObjectsList.Count)];
+            BoxSO randomBoxSO = _boxesScriptableObjectsList[_random.Next(0, _boxesScriptableObjectsList.Count)];
             
-            int randomMass = random.Next(1, 4);
-            
-            box.Initialisation(randomBoxSO.id, randomMass, randomBoxSO.material);
+            box.Initialisation(randomBoxSO.id, randomBoxSO.material);
         }
     }
 }
