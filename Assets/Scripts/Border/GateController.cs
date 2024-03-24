@@ -7,8 +7,8 @@ namespace Border
     public class GateController : MonoBehaviour
     { 
         [SerializeField] private TextMeshProUGUI buttonText;
-
-        [SerializeField] private GravityZoneController _gravityZoneController;
+        [SerializeField] private GravityZoneController _gravityController;
+        [SerializeField] private EnjectorController.EnjectorController _enjectorController;
 
         public bool IsOpen
         {
@@ -29,6 +29,7 @@ namespace Border
         private void Start()
         {
             _collider = gameObject.GetComponent<BoxCollider>();
+            _enjectorController.IsOpen = true;
         }
 
         private void OnTriggerExit(Collider other)
@@ -44,14 +45,20 @@ namespace Border
             if (_collider.isTrigger)
             {
                 _collider.isTrigger = false;
+                _enjectorController.IsOpen = false;
                 buttonText.text = OpenText;
             }
             else
             {
                 _collider.isTrigger = true;
-                _gravityZoneController.IsGravity = true;
+                _enjectorController.IsOpen = true;
+                _gravityController.IsGravity = true;
                 buttonText.text = CloseText;
             }
         }
+
+        public void OpenGate() => IsOpen = true;
+
+        public void CloseGate() => IsOpen = false;
     }
 }

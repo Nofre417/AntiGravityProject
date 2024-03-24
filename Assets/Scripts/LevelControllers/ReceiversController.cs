@@ -50,5 +50,6 @@ namespace LevelControllers
 
         public void IncrementScore(int score) => _levelController.Score += score;
         public void IncrementBoxesAmount(int boxes) => _levelController.BoxAmount += boxes;
+        public void IncrementWrongBoxes(int wrongBoxes) => _levelController.WrongBoxes += wrongBoxes;
     }
 }

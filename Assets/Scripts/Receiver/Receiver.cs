@@ -45,6 +45,10 @@ namespace Receiver
                 
                 UpdateInterface();
             }
+            else
+            {
+                _receiversController.IncrementWrongBoxes(1);
+            }
         }
 
         private void UpdateInterface()

@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using Border;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace Gravity
 {
@@ -11,7 +10,9 @@ namespace Gravity
         [SerializeField] private float _gravityScale;
         [SerializeField] private bool _IsGravity = true;
         [SerializeField] private GateController gateController;
+        [SerializeField] private Button _grabityButton;
 
+        private Color _buttonColor;
         public bool IsGravity
         {
             get => _IsGravity;
@@ -27,6 +28,8 @@ namespace Gravity
         private void Start()
         {
             _boxList = new();
+            Image image = _grabityButton.gameObject.GetComponent<Image>();
+            _buttonColor = image.color;
         }
         
 
@@ -43,6 +46,7 @@ namespace Gravity
             else
             {
                 _IsGravity = true;
+                
             }
             
             MoveBox();
@@ -103,11 +107,11 @@ namespace Gravity
                             {
                                 rb.useGravity = true;
                             }
-                            else if(_IsGravity == false && rb.useGravity)
+                            else if(_IsGravity == false)
                             {
                                 rb.useGravity = false;
                                 gravity = new Vector3(0, (_gravityScale - 0.5f), 0);
-                                
+
                                 rb.AddForce(gravity, ForceMode.Acceleration);
                             }
                         }
