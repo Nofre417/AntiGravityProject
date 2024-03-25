@@ -7,7 +7,6 @@ namespace LevelControllers.View
     {
         [SerializeField] private LevelController _levelController;
         [SerializeField] private TextMeshProUGUI _loseValueText;
-
         public int LoseValue
         {
             set => _loseValueText.text = $"{value}";

@@ -10,9 +10,7 @@ namespace Gravity
         [SerializeField] private float _gravityScale;
         [SerializeField] private bool _IsGravity = true;
         [SerializeField] private GateController gateController;
-        [SerializeField] private Button _grabityButton;
 
-        private Color _buttonColor;
         public bool IsGravity
         {
             get => _IsGravity;
@@ -28,8 +26,6 @@ namespace Gravity
         private void Start()
         {
             _boxList = new();
-            Image image = _grabityButton.gameObject.GetComponent<Image>();
-            _buttonColor = image.color;
         }
         
 

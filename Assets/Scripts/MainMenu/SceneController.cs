@@ -7,6 +7,8 @@ namespace MainMenu
 {
     public class SceneController : MonoBehaviour
     {
+        [SerializeField] private GameObject _soundController;
+        
         [SerializeField] private TextMeshProUGUI _scoreValueText;
         [SerializeField] private TextMeshProUGUI _boxesValueText;
 
@@ -23,6 +25,8 @@ namespace MainMenu
             {
                 this._gameData = BestScoreLoader.LoadResults<GameData>(this._recordsFilePath);
             }
+            
+            DontDestroyOnLoad(_soundController);
         }
 
         private void Start()

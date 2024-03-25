@@ -11,6 +11,8 @@ namespace LevelControllers
         [SerializeField] private ReceiversController _receiversController;
         [SerializeField] private LevelStatsView _levelStatsView;
 
+        [Header("Sound Controller")] public SoundController soundController;
+
         [Header("Lose Statements")] 
         [SerializeField] private int _boxesToLose = 10;
 
@@ -19,6 +21,12 @@ namespace LevelControllers
 
         [Header("Spawner")] 
         [SerializeField] private BoxSpawner _boxSpawner;
+
+        [Space]
+        
+        [Header("Sounds")] 
+        [SerializeField] private AudioClip _audioClipButtonClick;
+        [SerializeField] private AudioClip _loseAudioClip;
         
         public int Score
         {
@@ -60,6 +68,8 @@ namespace LevelControllers
 
         private void LosePanel()
         {
+            soundController.PlaySound(_loseAudioClip);
+            
             _boxSpawner.ToSpawn = false;
             _losePanel.LoseValue = _wrongBoxes;
             _losePanel.SwitchPanel(true);
@@ -72,6 +82,8 @@ namespace LevelControllers
         private void Start()
         {
             SetReceivers();
+
+            soundController = (SoundController) FindObjectOfType(typeof(SoundController));
             
             BestScoreDataController.ResetValues();
         }
@@ -92,6 +104,11 @@ namespace LevelControllers
         public void LevelExit()
         {
             SceneManager.LoadScene("MainMenuScene");
+        }
+
+        public void PlayClickSound()
+        {
+            soundController.PlaySound(_audioClipButtonClick);
         }
     }
 }

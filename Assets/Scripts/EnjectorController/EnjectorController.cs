@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace EnjectorController
@@ -30,16 +29,16 @@ namespace EnjectorController
 
         private void SwitchGates(bool status)
         {
-            if (status)
-            {
-                _leftGateAnimator.Play("LeftGateOpen");
-                _rightGateAnimator.Play("RighGateOpen");
-            }
-            else
-            {
-                _leftGateAnimator.Play("LeftGateClose");
-                _rightGateAnimator.Play("RighGateCLose");
-            }
+                if (status)
+                {
+                    _leftGateAnimator.Play("LeftGateOpen");
+                    _rightGateAnimator.Play("RighGateOpen");
+                }
+                else
+                {
+                    _leftGateAnimator.Play("LeftGateClose");
+                    _rightGateAnimator.Play("RighGateCLose");
+                }
         }
     }
 }

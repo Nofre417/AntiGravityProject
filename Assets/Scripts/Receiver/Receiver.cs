@@ -49,6 +49,8 @@ namespace Receiver
             {
                 _receiversController.IncrementWrongBoxes(1);
             }
+            
+            _receiversController.PlayReceiverSound();
         }
 
         private void UpdateInterface()

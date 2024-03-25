@@ -16,6 +16,9 @@ namespace LevelControllers
         [Header("Receivers")]
         [SerializeField] private List<Receiver.Receiver> _receiversList;
 
+        [Header("Receiver Sound")] 
+        [SerializeField] private AudioClip _receiverAudioClip;
+
         private Random _random;
         
         public void SetReceiversTargets()
@@ -48,6 +51,8 @@ namespace LevelControllers
             return result;
         }
 
+
+        public void PlayReceiverSound() => _levelController.soundController.PlaySound(_receiverAudioClip);
         public void IncrementScore(int score) => _levelController.Score += score;
         public void IncrementBoxesAmount(int boxes) => _levelController.BoxAmount += boxes;
         public void IncrementWrongBoxes(int wrongBoxes) => _levelController.WrongBoxes += wrongBoxes;
